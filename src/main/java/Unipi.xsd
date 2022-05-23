@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Versione XSD: Aprile 2016 -->
+<xs:schema xmlns="http://servizi.lavoro.gov.it/UNIPI"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://servizi.lavoro.gov.it/UNIPI"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="categoriacompensazione">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>Compensazione in eccedenza</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Compensazione in riduzione</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="statoconcessione">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>Approvata/Concessa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F">
+				<xs:annotation>
+					<xs:documentation>Richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="note">
+		<xs:restriction base="Stringa">
+			<xs:maxLength value="2000" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Sesso">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="M" />
+			<xs:enumeration value="F" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="categoriasoggetto">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>Disabile (L.68/99 art.1)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>Categoria protette (L.68/99 art.18)
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="categoriaassunzione">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NU">
+				<xs:annotation>
+					<xs:documentation>Numerica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NO">
+				<xs:annotation>
+					<xs:documentation>Nominativa</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoCodiceComunicazione">
+		<xs:restriction base="xs:string">
+			<xs:length value="16" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Stringa">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Numerico">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,6}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumericoPositivoNegativo">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\-]{0,1}[0-9]{1,6}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Percentuale">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(1[0-9 ]{2})|([1-9 ]{1}[0-9 ]{1})|([0-9 ]{1})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Stringa1">
+		<xs:restriction base="Stringa">
+			<xs:maxLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringaBreve">
+		<xs:restriction base="Stringa">
+			<xs:maxLength value="20" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Stringa50">
+		<xs:restriction base="Stringa">
+			<xs:maxLength value="50" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Stringa100">
+		<xs:restriction base="Stringa">
+			<xs:maxLength value="100" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceFiscale">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="[A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]" />
+			<xs:pattern value="[0-9]{11}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceFiscaleInternazionale">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="[A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]" />
+			<xs:pattern value="[0-9]{11}" />
+			<xs:pattern value="[A-Z]{2}[0-9A-Z]{1,97}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Comune">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{1}\d{3}" />
+			<xs:pattern value="[0]{4}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Cap">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{5}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EMail">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="80" />
+			<xs:pattern
+				value="([A-Za-z0-9!#-'\*\+\-/=\?\^_`\{-~]+(\.[A-Za-z0-9!#-'\*\+\-/=\?\^_`\{-~]+)*@[A-Za-z0-9!#-'\*\+\-/=\?\^_`\{-~]+(\.[A-Za-z0-9!#-'\*\+\-/=\?\^_`\{-~]+)*)?" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Settore">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}\.\d{2}\.\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="S-N">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="S" />
+			<xs:enumeration value="N" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Cittadinanza">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{3}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CategoriaEsclusa">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{4}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoComunicazione">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Regione">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Agevolazioni">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z0-9]{1}\d{1}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CCNL">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9,A-Z]{3}|[A-Z]{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QualificaProfessionale">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]\.){5}[0-9]{1,2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LivelloInquadramento">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="6" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PATINAIL">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{8,10}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Telefono">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="Recapiti">
+		<xs:sequence>
+			<xs:element name="telefono" type="Telefono" minOccurs="0" />
+			<xs:element name="fax" type="Telefono" minOccurs="0" />
+			<xs:element name="email" type="EMail" minOccurs="0" />
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="codicefiscale">
+		<xs:sequence>
+			<xs:element name="codicefiscale" type="CodiceFiscale" />
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="prospettoGenerale">
+		<xs:sequence>
+			<xs:element name="quadro1" type="quadro1" />
+			<xs:element name="quadro2" type="quadro2" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="quadro3" type="quadro3" minOccurs="0" />
+			<xs:element name="tipocomunicazione" type="TipoComunicazione" />
+		</xs:sequence>
+		<xs:attribute name="codicecomunicazione" type="TipoCodiceComunicazione"
+			use="required" />
+		<xs:attribute name="codicecomunicazioneprecedente" type="TipoCodiceComunicazione"
+			use="optional" />
+		<xs:attribute name="dataInvio" type="xs:dateTime" use="required" />
+		<xs:attribute name="delegato" type="CodiceFiscale" use="optional" />
+		<xs:attribute name="tipoDelegato" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9]{3}" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="e-mailDelegato" type="EMail" use="required" />
+		<xs:attribute name="protocollo" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="8" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="versione" type="Stringa" use="required"
+			fixed="PIDISABILI001600" />
+	</xs:complexType>
+	<xs:complexType name="quadro1">
+		<xs:sequence>
+			<xs:element name="datiprospetto" type="datiprospetto" />
+			<xs:element name="datiaziendali" type="datiaziendali" />
+			<xs:element name="gradualita" type="gradualita" minOccurs="0" />
+			<xs:element name="sospensionemobilita" type="sospensionemobilita"
+				minOccurs="0" />
+			<xs:element name="assunzionipubblicaselezione" type="assunzionipubblicaselezione"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="quadro2">
+		<xs:sequence>
+			<xs:element name="datiprovinciali" type="datiprovinciali" />
+			<xs:element name="personaledipendente" type="personale" />
+
+			<!-- 2016 -->
+			<xs:element name="personalenondipendente" type="personalenondipendente" />
+			<!-- 2016 -->
+
+			<xs:element name="lavoratoricomputabili" type="lavoratoricomputabili"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="postilavoro" type="postilavoro"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="compensazioni" type="compensazioni"
+				minOccurs="0" maxOccurs="unbounded" />
+
+			<xs:element name="sospensioni" type="sospensione"
+				minOccurs="0" />
+			<xs:element name="gradualita" type="gradualitaprov"
+				minOccurs="0" />
+			<xs:element name="esoneri" type="esoneri" minOccurs="0" />
+
+			<!-- 2016 -->
+			<xs:element name="esoneri60permille" type="esoneri60permille"
+				minOccurs="0" />
+			<!-- 2016 -->
+
+			<xs:element name="convenzione" type="convenzione"
+				minOccurs="0" />
+			<xs:element name="note" type="note" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="quadro3">
+		<xs:sequence>
+			<xs:element name="riepilogonazionale" type="riepilogonazionale" />
+			<xs:element name="elencoriepilogativoprovinciale" type="elencoriepilogativo"
+				maxOccurs="unbounded" />
+			<xs:element name="note" type="note" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="datiprospetto">
+		<xs:sequence>
+			<xs:element name="datariferimento" type="xs:date" />
+			<xs:element name="capogruppo" type="S-N" />
+			<xs:element name="cfcapogruppo" type="CodiceFiscaleInternazionale"
+				minOccurs="0" />
+			<xs:element name="capogruppoestera" type="S-N" minOccurs="0" />
+			<xs:element name="nlavoratorinazionali" type="Numerico" />
+			<xs:element name="categoriaazienda" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="A">
+							<xs:annotation>
+								<xs:documentation>Oltre i 50 dipendenti</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="B">
+							<xs:annotation>
+								<xs:documentation>Da 36 a 50 dipendenti</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="C">
+							<xs:annotation>
+								<xs:documentation>Da 15 a 35 dipendenti</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="dataprimaassunzione" type="xs:date" />
+					<xs:element name="datasecondaassunzione" type="xs:date"
+						minOccurs="0" />
+					<xs:element name="nessunaassunzioneaggiuntiva" fixed="N" />
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="nessunaassunzioneaggiuntiva" fixed="S"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="datiaziendali">
+		<xs:sequence>
+			<xs:element name="dichiarante" type="dichiarante" />
+			<xs:element name="sedelegale" type="sedelegale" />
+			<xs:element name="referente" type="referente" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dichiarante">
+		<xs:sequence>
+			<xs:element name="tipologiadichiarante">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="A">
+							<xs:annotation>
+								<xs:documentation>Datore lavoro privato</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="B">
+							<xs:annotation>
+								<xs:documentation>Ente Pubblico economico</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="C">
+							<xs:annotation>
+								<xs:documentation>Datore Lavoro Pubblico</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="D">
+							<xs:annotation>
+								<xs:documentation>Datore lavoro privato appartenente a gruppo d
+									imprese</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="codicefiscale" type="CodiceFiscale" />
+			<xs:element name="denominazione" type="Stringa100" />
+			<xs:element name="settore" type="Settore" />
+			<xs:element name="ccnl" type="CCNL" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sedelegale">
+		<xs:sequence>
+			<xs:element name="comunesedelegale" type="Comune" />
+			<xs:element name="capsedelegale" type="Cap" />
+			<xs:element name="indirizzosedelegale" type="Stringa100" />
+			<xs:group ref="Recapiti" />
+			<xs:element name="PECemail" type="EMail" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sederiferimentominimo">
+		<xs:sequence>
+			<xs:element name="comune" type="Comune" />
+			<xs:element name="cap" type="Cap" />
+			<xs:element name="indirizzo" type="Stringa100" />
+			<xs:group ref="Recapiti" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="referenteminimo">
+		<xs:sequence>
+			<xs:element name="cognome" type="Stringa50" />
+			<xs:element name="nome" type="Stringa50" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="referente">
+		<xs:sequence>
+			<xs:element name="codicefiscale" type="CodiceFiscale" />
+			<xs:element name="cognome" type="Stringa50" />
+			<xs:element name="nome" type="Stringa50" />
+			<xs:element name="indirizzo" type="Stringa100" />
+			<xs:element name="comune" type="Comune" />
+			<xs:element name="cap" type="Cap" />
+			<xs:group ref="Recapiti" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="gradualita">
+		<xs:sequence>
+			<xs:element name="dataatto" type="xs:date" />
+			<xs:element name="estremiatto" type="Stringa50" />
+			<xs:element name="assunzioninondisabiliprimaditrasformazione"
+				type="Numerico" />
+			<xs:element name="datatrasformazione" type="xs:date" />
+			<xs:element name="percentuale" type="Percentuale" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sospensionemobilita">
+		<xs:sequence>
+			<xs:element name="sospensionepermobilita" type="S-N"
+				minOccurs="0" />
+			<xs:element name="datafinesospensione" type="xs:date"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="assunzionipubblicaselezione">
+		<xs:sequence>
+			<xs:element name="regione" type="Regione" />
+			<xs:element name="saldodisabili" type="NumericoPositivoNegativo" />
+			<xs:element name="saldoexart18" type="NumericoPositivoNegativo" />
+			<xs:element name="note" type="note" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="categorieescluse">
+		<xs:sequence>
+			<xs:element name="categoria" type="CategoriaEsclusa"/>
+			<xs:element name="numero" type="Numerico"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dettaglioparttime">
+		<xs:sequence>
+			<xs:element name="numero" type="Numerico"/>
+			<xs:element name="orariosettimanalecontrattuale">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="orariosettimanaleparttime">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dettagliointermittenti">
+		<xs:sequence>
+			<xs:element name="numero" type="Numerico"/>
+			<xs:element name="orariosettimanalecontrattuale">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="orariosettimanalesvolto">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="datiprovinciali">
+		<xs:sequence>
+			<xs:element name="provincia">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="sederiferimento" type="sederiferimentominimo"/>
+			<xs:element name="referente" type="referenteminimo"/>
+			<xs:element name="nposticentralinisti" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="Stringa">
+						<xs:pattern value="[0-9]{1,2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="npostimassofisioterapisti" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="Stringa">
+						<xs:pattern value="[0-9]{1,2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 2016 -->
+	<xs:complexType name="parttime">
+		<xs:sequence>
+			<xs:element name="nlavoratoriparttime" type="Numerico" />
+			<xs:element name="orariosettimanalecontrattuale">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="orariosettimanaleparttime">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lavoratoritempopienoparttime">
+		<xs:sequence>
+			<xs:element name="nlavoratoritempopieno" type="Numerico" />
+			<xs:element name="parttime" type="parttime" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 2016 -->
+	
+	<xs:complexType name="personale">
+		<xs:sequence>
+			<xs:element name="nlavoratori" type="Numerico"/>
+			
+			<!-- 2016 -->
+			<xs:element name="disabili" type="lavoratoritempopienoparttime"/>
+			<xs:element name="centralinisti" type="lavoratoritempopienoparttime"/>
+			<xs:element name="massofisioterapisti" type="lavoratoritempopienoparttime"/>
+			<!-- 2016 -->
+			
+			<!-- 2016 -->
+			<xs:element name="telelavoro" type="lavoratoritempopienoparttime"/>
+			<!-- 2016 -->
+			
+			<xs:element name="categorieescluse" type="categorieescluse" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="dettaglioparttime" type="dettaglioparttime" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="dettagliointermittenti" type="dettagliointermittenti" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="categorieprotette" type="Numerico"/>
+			<xs:element name="dicuiinforzaal17012000" type="Numerico" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 2016 -->
+	<xs:complexType name="personalenondipendente">
+		<xs:sequence>	
+			<xs:element name="lavoratoridisabilisomministrati" type="lavoratoritempopienoparttime"/>
+			<xs:element name="lavoratoridisabiliconv12bis14" type="lavoratoritempopienoparttime"/>	
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 2016 -->
+	
+	<xs:complexType name="rapportolavoro">
+		<xs:sequence>
+			<xs:element name="datainizio" type="xs:date"/>
+			
+			<!-- 2016 aggiunto minoccurs -->
+			<xs:element name="tipologiacontr" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="Stringa">
+						<xs:pattern value="[A-Z]{1}(\.[0-9]{2}){2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- 2016 aggiunto minoccurs -->
+			
+			<xs:element name="datafine" type="xs:date" minOccurs="0"/>
+			<xs:element name="qualifica" type="QualificaProfessionale"/>
+			<xs:element name="tipoassunzione">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="orariosettimanale">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="orariosettimanaleparttime">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="categoriasogg" type="categoriasoggetto"/>
+			<xs:element name="categoriaass" type="categoriaassunzione"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lavoratore">
+		<xs:sequence>
+			<xs:element name="codicefiscale" type="CodiceFiscale"/>
+			<xs:element name="cognome" type="Stringa50"/>
+			<xs:element name="nome" type="Stringa50"/>
+			<xs:element name="sesso" type="Sesso"/>
+			<xs:element name="datanascita" type="xs:date"/>
+			<xs:element name="comunenascita" type="Comune"/>
+			<xs:element name="percentualedisabilita" type="Percentuale" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lavoratoricomputabili">
+		<xs:sequence>
+			<xs:element name="lavoratore" type="lavoratore"/>
+			<xs:element name="rapportolavoro" type="rapportolavoro"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="postilavoro">
+		<xs:sequence>
+			<xs:element name="qualificaprof" type="QualificaProfessionale"/>
+			<xs:element name="mansione">
+				<xs:simpleType>
+					<xs:restriction base="Stringa">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="nposti" type="Numerico"/>
+			<xs:element name="categoriasogg" type="categoriasoggetto"/>
+			<xs:element name="comuneass" type="Comune"/>
+			<xs:element name="capacitacontroindicazioni">
+				<xs:simpleType>
+					<xs:restriction base="Stringa">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="barrierearchitettoniche" type="S-N"/>
+			<xs:element name="turninotturni" type="S-N"/>
+			<xs:element name="mezzipubblici" type="S-N"/>
+			<xs:element name="categoriaass" type="categoriaassunzione" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="compensazioni">
+		<xs:sequence>
+			
+			<!-- 2016 campi tolti -->
+			<!--
+			<xs:element name="stato" type="statoconcessione" minOccurs="0"/>
+			<xs:element name="dataatto" type="xs:date" minOccurs="0"/>
+			<xs:element name="estremiatto" type="Stringa50" minOccurs="0"/>
+			-->
+			<!-- 2016 -->
+			
+			<xs:element name="provincia">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="categoriacomp" type="categoriacompensazione"/>
+			<xs:element name="numero" type="Numerico"/>
+			<xs:element name="categoriasogg" type="categoriasoggetto"/>
+			<xs:element name="codicefiscaleaziendagruppo" type="CodiceFiscale" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sospensione">
+		<xs:sequence>
+			<xs:element name="stato" type="statoconcessione"/>
+			<xs:element name="causale">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="datafinesospensione" type="xs:date" minOccurs="0"/>
+			<xs:element name="numerolavoratori" type="Numerico"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="gradualitaprov">
+		<xs:sequence>
+			<xs:element name="nassunzioni" type="Numerico"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="esoneri">
+		<xs:sequence>
+			<xs:element name="stato" type="statoconcessione"/>
+			<xs:element name="dataatto" type="xs:date" minOccurs="0"/>
+			<xs:element name="estremiatto" type="Stringa50" minOccurs="0"/>
+			<xs:element name="finoal" type="xs:date" minOccurs="0"/>
+			<xs:element name="percentuale" type="Percentuale" minOccurs="0"/>
+			<xs:element name="numerolavoratori" type="Numerico" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 2016 -->
+	<xs:complexType name="esoneri60permille">
+		<xs:sequence>
+			<xs:element name="dataautocertificazione" type="xs:date"/>
+			<xs:element name="numerolavoratori60permille" type="Numerico"/>
+			<xs:element name="numerolavoratoriesonero" type="Numerico"/>
+			<xs:element name="percentuale" type="Percentuale" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 2016 -->
+	
+	<xs:complexType name="convenzione">
+		<xs:sequence>
+			<xs:element name="stato" type="statoconcessione"/>
+			<xs:element name="dataatto" type="xs:date" minOccurs="0"/>
+			<xs:element name="estremiatto" type="Stringa50" minOccurs="0"/>
+			<xs:element name="tipoconvenzione">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="numLavoratoriPrevisti">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="datastipula" type="xs:date" minOccurs="0"/>
+			<xs:element name="dataconcessione" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="riepilogonazionale">
+		<xs:sequence>
+			<xs:element name="numLavBaseComputoArt3" type="Numerico"/>
+			<xs:element name="numLavBaseComputoArt18" type="Numerico"/>
+			<xs:element name="quotariservadisabili" type="Numerico"/>
+			<xs:element name="quotariservacatprotette" type="Numerico"/>
+			<xs:element name="esoneri" type="Numerico"/>
+			<xs:element name="disabili" type="Numerico"/>
+			<xs:element name="catprotette" type="Numerico"/>
+			<xs:element name="quotaesuberiArt18" type="Numerico"/>
+			<xs:element name="scoperturedisabili" type="Numerico"/>
+			<xs:element name="scoperturecatprotette" type="Numerico"/>
+			<xs:element name="sospensioniincorso" type="S-N"/>
+			
+			<!-- 2016 -->
+			<!-- 2016 -->
+			
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="elencoriepilogativo">
+		<xs:sequence>
+			<xs:element name="provincia">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="numLavBaseComputoArt3" type="Numerico"/>
+			<xs:element name="numLavBaseComputoArt18" type="Numerico"/>
+			<xs:element name="categoriacompdisabili" type="categoriacompensazione" minOccurs="0"/>
+			<xs:element name="numerocompdisabili" type="Numerico" minOccurs="0"/>
+			<xs:element name="categoriacompcatprotette" type="categoriacompensazione" minOccurs="0"/>
+			<xs:element name="numerocompcatprotette" type="Numerico" minOccurs="0"/>
+			<xs:element name="disabili" type="Numerico"/>
+			<xs:element name="catprotette" type="Numerico"/>
+			<xs:element name="quotariservadisabili" type="Numerico"/>
+			<xs:element name="quotariservacatprotette" type="Numerico"/>
+			<xs:element name="esonerati" type="Numerico"/>
+			<xs:element name="scoperturedisabili" type="Numerico"/>
+			<xs:element name="scoperturecatprotette" type="Numerico"/>
+			<xs:element name="sospensioniincorso" type="S-N"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="prospetto" type="prospettoGenerale"/>
+</xs:schema>
