@@ -62,6 +62,7 @@ public class JaxbMassiveTestRIOutExcel {
 		
 		XlsxWriter writer = new XlsxWriter("pippo1.xlsx");
 		writer.open();
+		writer.addheader(new String[] {"Nr Lavoratori Nazionali","CF/P.IVA","DENOMINAZIONE","CCNL","COMUNE SEDE LEGALE","CAP","INDIRIZZO","Nr Lavoratori Base di computo Disabili Prov VT","Nr Lavoratori Base Computo art.18 Prov VT","Disabili Prov. VT","Art. 18 Prov VT","Quota Riserva Disabili Prov VT","Quota Riserva Art.18 Prov VT","Scoperture Disabili Prov VT","Scoperture  Art.18 Prov VT","PROVINCIA"});
 		try {
 			JAXBContext context = JAXBContext.newInstance(ProspettoGenerale.class);
 			
