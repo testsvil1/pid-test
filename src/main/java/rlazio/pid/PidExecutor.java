@@ -22,6 +22,9 @@ public class PidExecutor {
 		long now = System.currentTimeMillis();
 		OptionsParser optionsParser = new OptionsParser();
 		OptionConfig optionConfig = optionsParser.parse(args);
+		if (optionConfig==null) {
+			return;
+		}
 		
 		// String path = "C:\\work\\22-02-25_PID_Paramucchi\\PID\\Prospetti_2022_ROMA";
 		String path = optionConfig.xmldir;

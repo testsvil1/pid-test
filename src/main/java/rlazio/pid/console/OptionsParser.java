@@ -25,23 +25,21 @@ public class OptionsParser {
 	public OptionConfig parse(String[] args) {
 		try {
 			
-			Option optHelp = new Option("help", "Stampa questo messaggio di aiuto");
 			Option optXmlDir =  Option.builder("xmldir")
 			        				.argName("dir")
 			        				.hasArg()
 			        				.desc("Percorso della directory che contiene gli xml da processare")
 			        				.build();
-			Option optFile =  Option.builder("outfile")
-    								.argName("file")
-    								.hasArg()
-    								.desc("Percorso del file excel prodotto")
-    								.build();
 			Option optProvincia =  Option.builder("prv")
 									.argName("sigla")
 									.hasArg()
 									.desc("Sigla della provincia di riferimento per cui si sta eseguendo la generazione del file (FR, LT, RI, RM, VT)")
 									.build();
-
+			Option optFile =  Option.builder("outfile")
+    								.argName("file")
+    								.hasArg()
+    								.desc("Percorso del file excel prodotto")
+    								.build();
 			Option optOverwrite =  Option.builder("y")
 									.argName("file")
 									.desc("Sovrascrive il file excel se gia' presente")
@@ -49,8 +47,8 @@ public class OptionsParser {
 			
 			Options options = new Options();
 			options.addOption(optXmlDir);
-			options.addOption(optFile);
 			options.addOption(optProvincia);
+			options.addOption(optFile);
 			options.addOption(optOverwrite);
 
 			if (args.length==0) {
@@ -58,10 +56,10 @@ public class OptionsParser {
 				formatter.setSyntaxPrefix("");
 				formatter.setOptionComparator(null);
 				String NL = System.getProperty("line.separator");
-				String header = "Produce il quadro riassuntivo in formato excel di un insieme di prospetti informativi disabili in formato xml" + NL + NL;
-				String footer = NL + "Esempio:" + NL + "   >pidgen  -xmldir c:/test/in  -outfile c:/summary.xlsx  -prv RM" + NL +
+				String header = "Produce il quadro riassuntivo in excel di un insieme di prospetti informativi disabili in formato xml" + NL + NL;
+				String footer = NL + "Esempio:" + NL + "   >pidsumgen  -xmldir c:/test/in  -prv RM  -outfile c:/summary.xlsx  " + NL +
 						        "Produce il file summary.xlsx contenente il quadro riassuntivo per la provncia di roma per i pid presenti nella directory c:/test/in";
-				formatter.printHelp("pidgen", header, options, footer);
+				formatter.printHelp("pidsumgen", header, options, footer);
 				return null;
 			}
 			
