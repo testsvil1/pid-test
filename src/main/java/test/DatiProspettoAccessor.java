@@ -9,7 +9,7 @@ public class DatiProspettoAccessor {
 	
 	Datiprospetto datiProspetto;
 	
-	DatiProspettoAccessor(Datiprospetto datiProspetto){
+	public DatiProspettoAccessor(Datiprospetto datiProspetto){
 		this.datiProspetto = datiProspetto;
 	}
 	

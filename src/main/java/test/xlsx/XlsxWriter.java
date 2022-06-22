@@ -78,7 +78,7 @@ public class XlsxWriter {
 	public void close() {
 		addConditionalFormatting();
 		addIgnoreError();
-		autosizeColumns();
+		//autosizeColumns();
 	    try {
 			try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
 			    workbook.write(outputStream);

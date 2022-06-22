@@ -1,4 +1,4 @@
-package test.giorgio;
+package rlazio.pid.processor;
 
 import java.util.List;
 
@@ -8,7 +8,12 @@ public interface PidProcessor {
 
 	// un pid puo' produrre piu righe del prospetto
 	// ogni riga e' rappresentata come lista di stringhe
+	public List<List<String>> process(ProspettoGenerale ret);
 	
-	public List<List<String>> process(ProspettoGenerale ret) ;
+	
+	
+	// Intestazioni fisse
+	public String[] getHeader();
+	
 	
 }
