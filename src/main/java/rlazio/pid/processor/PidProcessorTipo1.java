@@ -12,8 +12,18 @@ public class PidProcessorTipo1 implements PidProcessor{
 	@Override
 	public String[] getHeader() {
 		//return new String[] {"Nr Lavoratori Nazionali","CF/P.IVA","DENOMINAZIONE","CCNL","COMUNE SEDE LEGALE","CAP","INDIRIZZO","Nr Lavoratori Base di computo Disabili Prov VT","Nr Lavoratori Base Computo art.18 Prov VT","Disabili Prov. VT","Art. 18 Prov VT","Quota Riserva Disabili Prov VT","Quota Riserva Art.18 Prov VT","Scoperture Disabili Prov VT","Scoperture  Art.18 Prov VT","PROVINCIA"};
-		return new String[] {"e-mailDelegato", "ns1:denominazione", "Codice Fiscale/P.Iva", "ns1:telefono", "ns1:email", "ns1:cognome", "ns1:nome", "ns1:telefono2", "ns1:email2", "ns1:cognome2", "ns1:numLavBaseComputoArt3", "ns1:numLavBaseComputoArt18", "ns1:quotariservadisabili", "ns1:quotariservacatprotette", "ns1:scoperturedisabili2", "ns1:scoperturecatprotette2", "ns1:stato"};
-
+		//return new String[] {"e-mailDelegato", "ns1:denominazione", "Codice Fiscale/P.Iva", "ns1:telefono", "ns1:email", "ns1:cognome", "ns1:nome", "ns1:telefono2", "ns1:email2", "ns1:cognome2", "ns1:numLavBaseComputoArt3", "ns1:numLavBaseComputoArt18", "ns1:quotariservadisabili", "ns1:quotariservacatprotette", "ns1:scoperturedisabili2", "ns1:scoperturecatprotette2", "ns1:stato"};
+		return new String[] { "e-mailDelegato", "dichiarante_denominazione", "dichiarante_codiceFiscale",
+				"dichiarante_ccnl", "sedeLegale_cap", "sedeLegale_indirizzo", "sedeLegale_telefono", "sedeLegale_email",
+				"referente_cognome", "referente_nome", "referente_:telefono", "referente_email",
+				"datiProvinciali_referente_cognome", "nazionale_numLavBaseComputoArt3",
+				"nazionale_numLavBaseComputoArt18", "nazionale_quotariservadisabili",
+				"nazionale_quotariservacatprotette", "nazionale_disabili", "nazionale_protette",
+				"nazionale_esuberiaArt18", "nazionale_scopertureDisabili", "nazionale_scopertureCatProtette",
+				"provinciale_provincia", "provinciale_baseComputoArt3", "provinciale_baseComputoArt18",
+				"provinciale_disabilii", "provinciale_catprotette", "provinciale_quotaRiservaDisabili",
+				"provinciale_quotaRiservaCatProtette", "provinciale_scopertureDisabili",
+				"provinciale_scopertureCatProtette", "convenzione" };
 	}
 	
 	

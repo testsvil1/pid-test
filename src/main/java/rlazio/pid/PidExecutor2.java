@@ -13,9 +13,11 @@ import rlazio.pid.console.OptionsParser;
 import rlazio.pid.console.ProgressBar;
 import rlazio.pid.processor.PidProcessor;
 import rlazio.pid.processor.PidProcessorFactory;
+import test.giorgio.ContaFileDuplicatiTest;
+import test.giorgio.PopolaStrutturaAnalisiTest2;
 import test.xlsx.XlsxWriter;
 
-public class PidExecutor {
+public class PidExecutor2 {
 
 	public static void main(String[] args) {
 
@@ -30,8 +32,16 @@ public class PidExecutor {
 		String path = optionConfig.xmldir;
 		File file = new File(path);
 
-		String[] fileList = file.list();
+		String[] fileList0 = file.list();
+		System.out.println("Eliminazione Dupicati");
+		
+		List<String> fileList1 = ContaFileDuplicatiTest.eliminaDuplicati(fileList0);
+		
+		System.out.println("Rimozione pid obsoleti");
+		List<String> fileList2 = PopolaStrutturaAnalisiTest2.ritornaSoloUltimiPid(fileList1, path);
 
+		String[] fileList = fileList2.toArray(new String[fileList2.size()]);
+		
 		PidProcessor pidProcessor = new PidProcessorFactory().get(optionConfig.provincia);
 
 		XlsxWriter writer = new XlsxWriter(optionConfig.fileout);
@@ -59,7 +69,7 @@ public class PidExecutor {
 					ret = (ProspettoGenerale) JAXBIntrospector
 							.getValue(context.createUnmarshaller().unmarshal(new FileReader(fileName)));
 				} catch (Exception e) {
-					System.out.println(">> Errore Elaborazione file " +  fileName);
+					System.out.println(">>>>" +  fileName);
 					e.printStackTrace();
 				}
 
@@ -72,8 +82,6 @@ public class PidExecutor {
 
 			}
 
-		} catch (PidException pide) {
-			System.err.println(pide.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

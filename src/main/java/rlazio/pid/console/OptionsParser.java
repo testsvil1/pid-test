@@ -33,7 +33,7 @@ public class OptionsParser {
 			Option optProvincia =  Option.builder("prv")
 									.argName("sigla")
 									.hasArg()
-									.desc("Sigla della provincia di riferimento per cui si sta eseguendo la generazione del file (FR, LT, RI, RM, VT)")
+									.desc("Sigla della provincia di riferimento per cui si sta eseguendo la generazione del file (FR, LT, RI, RM, VT, RM_C1)")
 									.build();
 			Option optFile =  Option.builder("outfile")
     								.argName("file")
@@ -58,7 +58,7 @@ public class OptionsParser {
 				String NL = System.getProperty("line.separator");
 				String header = "Produce il quadro riassuntivo in excel di un insieme di prospetti informativi disabili in formato xml" + NL + NL;
 				String footer = NL + "Esempio:" + NL + "   >pidsumgen  -xmldir c:/test/in  -prv RM  -outfile c:/summary.xlsx  " + NL +
-						        "Produce il file summary.xlsx contenente il quadro riassuntivo per la provncia di roma per i pid presenti nella directory c:/test/in";
+						        "Produce il file summary.xlsx contenente il quadro riassuntivo per la provincia di Roma per i pid presenti nella directory c:/test/in";
 				formatter.printHelp("pidsumgen", header, options, footer);
 				return null;
 			}

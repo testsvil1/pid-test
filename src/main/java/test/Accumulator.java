@@ -13,6 +13,7 @@ public class Accumulator {
 		List<Object> elements = data.get(key);
 		if (elements == null) {
 			elements = new ArrayList<Object>();
+			data.put(key, elements);
 		}
 		elements.add(element);
 	}
@@ -26,5 +27,12 @@ public class Accumulator {
 		return data.get(key).size();
 	}
 	
+	public int size(){
+		return data.size();
+	}
+	
+	public Map<String, List<Object>> getInternalMap(){
+		return data;
+	}
 	
 }

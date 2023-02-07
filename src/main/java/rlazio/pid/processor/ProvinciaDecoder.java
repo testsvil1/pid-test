@@ -14,6 +14,8 @@ public class ProvinciaDecoder {
 		PROVINCIE.put("RI", "057");
 		PROVINCIE.put("RM", "058");
 		PROVINCIE.put("VT", "056");
+		
+		PROVINCIE.put("RM_C1", "058");
 	}
 	
 	

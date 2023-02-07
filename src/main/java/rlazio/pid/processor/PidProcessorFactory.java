@@ -7,6 +7,9 @@ public class PidProcessorFactory {
 		if ("RM".contains(siglaProvincia)) {
 			return new PidProcessorTipo1();
 		}
+		if ("RM_C1".contains(siglaProvincia)) {
+			return new PidProcessorTipoRmCaso1();
+		}
 		if ("FR,LT,RI,VT".contains(siglaProvincia)) {
 			return new PidProcessorTipo2(siglaProvincia);
 		}

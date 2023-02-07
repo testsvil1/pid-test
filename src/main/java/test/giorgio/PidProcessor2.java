@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.gov.lavoro.servizi.unipi.ProspettoGenerale;
 
+
 public class PidProcessor2 implements PidProcessor {
 
 	// un pid puo' produrre piu righe del prospetto
