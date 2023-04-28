@@ -8,6 +8,14 @@ import rlazio.pid.processor.PidProcessor;
 
 public class PidProcessorTipo1 implements PidProcessor{
 
+	String siglaProvincia;
+	String codiceProvincia;
+	
+	public PidProcessorTipo1(String siglaProvincia) {
+		this.siglaProvincia = siglaProvincia;
+		this.codiceProvincia = ProvinciaDecoder.decode(siglaProvincia);
+	}
+	
 	
 	@Override
 	public String[] getHeader() {
@@ -36,7 +44,7 @@ public class PidProcessorTipo1 implements PidProcessor{
 		// String codComunicazione = ret.getCodicecomunicazione();
 		for (int i = 0; i < ret.getQuadro2().size(); i++) {
 
-			if (ret.getQuadro2().get(i).getDatiprovinciali().getProvincia().equals("058")) {
+			if (ret.getQuadro2().get(i).getDatiprovinciali().getProvincia().equals(codiceProvincia)) {
 				List<String> row = new ArrayList<String>();
 
 				row.add(ret.getEMailDelegato());
@@ -68,7 +76,7 @@ public class PidProcessorTipo1 implements PidProcessor{
 				for (int j = 0; j < ret.getQuadro3().getElencoriepilogativoprovinciale().size(); j++) {
 					// getProvinvia = 058 solo questa
 					if (ret.getQuadro3().getElencoriepilogativoprovinciale().get(j).getProvincia()
-							.equals("058")) {
+							.equals(codiceProvincia)) {
 						row.add(ret.getQuadro3().getElencoriepilogativoprovinciale().get(j).getProvincia());
 						row.add(ret.getQuadro3().getElencoriepilogativoprovinciale().get(j)
 								.getNumLavBaseComputoArt3());

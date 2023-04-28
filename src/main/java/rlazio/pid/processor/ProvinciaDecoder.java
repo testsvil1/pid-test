@@ -16,6 +16,18 @@ public class ProvinciaDecoder {
 		PROVINCIE.put("VT", "056");
 		
 		PROVINCIE.put("RM_C1", "058");
+		PROVINCIE.put("RM_C2", "058");
+		PROVINCIE.put("RM_C3", "058");
+
+		PROVINCIE.put("RI_C1", "057");
+		PROVINCIE.put("VT_C1", "056");
+
+		PROVINCIE.put("RI_C3", "057");
+		PROVINCIE.put("VT_C3", "056");
+
+		PROVINCIE.put("FR_C3", "060");
+		PROVINCIE.put("LT_C3", "059");
+
 	}
 	
 	
