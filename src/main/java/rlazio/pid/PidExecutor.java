@@ -13,6 +13,9 @@ import rlazio.pid.console.OptionsParser;
 import rlazio.pid.console.ProgressBar;
 import rlazio.pid.processor.PidProcessor;
 import rlazio.pid.processor.PidProcessorFactory;
+import rlazio.pid.processor.TemplateDecoder;
+import test.giorgio.ContaFileDuplicatiTest;
+import test.giorgio.PopolaStrutturaAnalisiTest2_2023;
 import test.xlsx.XlsxWriter;
 
 public class PidExecutor {
@@ -31,8 +34,17 @@ public class PidExecutor {
 		File file = new File(path);
 
 		String[] fileList = file.list();
+		
+		if (optionConfig.rimuoviDuplicati) {
+			System.out.println("Eliminazione Dupicati");
+			List<String> fileList1 = ContaFileDuplicatiTest.eliminaDuplicati(fileList);
+			System.out.println("Rimozione pid obsoleti");
+			List<String> fileList2 = PopolaStrutturaAnalisiTest2_2023.ritornaSoloUltimiPid(fileList1, path);
+			fileList = fileList2.toArray(new String[fileList2.size()]);
+		}
 
-		PidProcessor pidProcessor = new PidProcessorFactory().get(optionConfig.provincia);
+
+		PidProcessor pidProcessor = new PidProcessorFactory().get(optionConfig.template, optionConfig.provincia);
 
 		XlsxWriter writer = new XlsxWriter(optionConfig.fileout);
 		writer.open();

@@ -17,6 +17,7 @@ import org.apache.commons.cli.ParseException;
 
 import rlazio.pid.PidException;
 import rlazio.pid.processor.ProvinciaDecoder;
+import rlazio.pid.processor.TemplateDecoder;
 
 
 
@@ -33,32 +34,44 @@ public class OptionsParser {
 			Option optProvincia =  Option.builder("prv")
 									.argName("sigla")
 									.hasArg()
-									.desc("Sigla della provincia di riferimento per cui si sta eseguendo la generazione del file (FR, LT, RI, RM, VT, RM_C1)")
+									.desc("Sigla della provincia di riferimento per cui si sta eseguendo la generazione del file (FR, LT, RI, RM, VT)")
+									.build();
+			Option optTemplate =  Option.builder("layout")
+									.argName("template")
+									.hasArg()
+									.desc("Nome del template che rappresenta il formato (colonne) del file di output")
 									.build();
 			Option optFile =  Option.builder("outfile")
     								.argName("file")
     								.hasArg()
     								.desc("Percorso del file excel prodotto")
     								.build();
-			Option optOverwrite =  Option.builder("y")
-									.argName("file")
+			Option optOverwrite =  Option.builder("overwrite")
 									.desc("Sovrascrive il file excel se gia' presente")
 									.build();
+			Option optNoDuplicate =  Option.builder("noduplicati")
+									.desc("Considera solo la comunicazione piu' recente (elimina i duplicati su invii multipli)")
+									.build();
+			
 			
 			Options options = new Options();
 			options.addOption(optXmlDir);
 			options.addOption(optProvincia);
+			options.addOption(optTemplate);
 			options.addOption(optFile);
 			options.addOption(optOverwrite);
+			options.addOption(optNoDuplicate);
 
 			if (args.length==0) {
 				HelpFormatter formatter = new HelpFormatter();
+				formatter.setWidth(100);
 				formatter.setSyntaxPrefix("");
 				formatter.setOptionComparator(null);
 				String NL = System.getProperty("line.separator");
 				String header = "Produce il quadro riassuntivo in excel di un insieme di prospetti informativi disabili in formato xml" + NL + NL;
-				String footer = NL + "Esempio:" + NL + "   >pidsumgen  -xmldir c:/test/in  -prv RM  -outfile c:/summary.xlsx  " + NL +
-						        "Produce il file summary.xlsx contenente il quadro riassuntivo per la provincia di Roma per i pid presenti nella directory c:/test/in";
+				String footer = NL + "Esempio:" + NL + "   >pidsumgen  -xmldir c:/test/in  -prv RM  -layout sito  -outfile c:/summary.xlsx  -noduplicati" + NL +
+						        "Produce il file summary.xlsx contenente il quadro riassuntivo per la provincia di Roma per i pid presenti nella directory c:/test/in" +
+						        " utilizzando come layout il template sito ed elimminado i duplicati" ;
 				formatter.printHelp("pidsumgen", header, options, footer);
 				return null;
 			}
@@ -67,26 +80,40 @@ public class OptionsParser {
 			CommandLine cmdLine = cmdParser.parse(options, args);
 
 			if (!cmdLine.hasOption(optXmlDir)) {
-				throw new PidException("parametro xmlDIr non trovato");
+				throw new PidException("parametro xmlDir non trovato");
 			}
 			String xmlDirValue = cmdLine.getOptionValue(optXmlDir);
+			
 			if (!cmdLine.hasOption(optFile)) {
 				throw new PidException("parametro file non trovato");
 			}
 			String outFileValue = cmdLine.getOptionValue(optFile);
+			
 			if (!cmdLine.hasOption(optProvincia)) {
-				throw new PidException("parametro provnvia non trovato");
+				throw new PidException("parametro provincia non trovato");
 			}
 			String provinciaValue = cmdLine.getOptionValue(optProvincia);
+
+			if (!cmdLine.hasOption(optTemplate)) {
+				throw new PidException("parametro layout non trovato");
+			}
+			String layoutValue = cmdLine.getOptionValue(optTemplate);
+			
 			boolean overwriteValue = cmdLine.hasOption(optOverwrite);
+			boolean rimuoviDuplicatiValue = cmdLine.hasOption(optNoDuplicate);
+			
+			
 			checkXmlInDirPath(xmlDirValue);
 			checkXlsxFileOut(outFileValue, overwriteValue);
 			checkProvincia(provinciaValue);
+			checkLayout(layoutValue);
 			
 			OptionConfig config = new OptionConfig();
 			config.xmldir = xmlDirValue;
 			config.fileout = outFileValue;
 			config.provincia = provinciaValue;
+			config.template = layoutValue;
+			config.rimuoviDuplicati = rimuoviDuplicatiValue;
 			return config;
 			
 		} catch (ParseException e) {
@@ -137,7 +164,12 @@ public class OptionsParser {
     	}
     }
 	
-
+    private void checkLayout(String template) {
+    	if (TemplateDecoder.decode(template)==null) {
+    		throw new PidException("template non valido " + template);
+    	}
+    }
+    
 	public static void main(String[] args) {
 		new OptionsParser().parse(args);
 	}
