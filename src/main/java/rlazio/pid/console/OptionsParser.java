@@ -39,7 +39,7 @@ public class OptionsParser {
 			Option optTemplate =  Option.builder("layout")
 									.argName("template")
 									.hasArg()
-									.desc("Nome del template che rappresenta il formato (colonne) del file di output")
+									.desc("Nome del template che rappresenta il formato (colonne) del file di output. (Sito, Ritardo)")
 									.build();
 			Option optFile =  Option.builder("outfile")
     								.argName("file")
@@ -69,9 +69,13 @@ public class OptionsParser {
 				formatter.setOptionComparator(null);
 				String NL = System.getProperty("line.separator");
 				String header = "Produce il quadro riassuntivo in excel di un insieme di prospetti informativi disabili in formato xml" + NL + NL;
-				String footer = NL + "Esempio:" + NL + "   >pidsumgen  -xmldir c:/test/in  -prv RM  -layout sito  -outfile c:/summary.xlsx  -noduplicati" + NL +
-						        "Produce il file summary.xlsx contenente il quadro riassuntivo per la provincia di Roma per i pid presenti nella directory c:/test/in" +
-						        " utilizzando come layout il template sito ed elimminado i duplicati" ;
+				String footer = NL + "Esempio:" + NL + "> pidsumgen  -xmldir c:/test/in  -prv RM  -layout Sito  -outfile c:/summary.xlsx  -noduplicati" + NL +
+						        "Produce il file 'summary.xlsx', contenente il quadro riassuntivo per la provincia di Roma, per i pid presenti nella directory 'c:/test/in'," +
+						        " utilizzando come layout il template 'Sito' ed elimminado i duplicati" +
+						        NL + NL +
+						        "Template disponibili:" + NL + 
+						        ". Sito: Utilizzato per la pubblicazione dei prospetti informativi sul sito della regione lazio"  + NL +
+						        ". Ritardo: Simile a 'Sito' ma con informazioni aggiuntive relative al tipo di comunicazione e alle date di invio";
 				formatter.printHelp("pidsumgen", header, options, footer);
 				return null;
 			}
