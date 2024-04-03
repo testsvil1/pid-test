@@ -40,7 +40,9 @@ public class PidExecutor {
 			List<String> fileList1 = ContaFileDuplicatiTest.eliminaDuplicati(fileList);
 			System.out.println("Rimozione pid obsoleti");
 			List<String> fileList2 = PopolaStrutturaAnalisiTest2_2023.ritornaSoloUltimiPid(fileList1, path);
+			System.out.println(fileList.length + " >> " + fileList2.size() );
 			fileList = fileList2.toArray(new String[fileList2.size()]);
+			
 		}
 
 
