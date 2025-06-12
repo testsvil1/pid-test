@@ -12,6 +12,7 @@ public class TemplateDecoder {
 		TEMPLATE.put("Sito".toUpperCase(), "rlazio.pid.processor.PidProcessorParamucchiRm");
 		TEMPLATE.put("Ritardo".toUpperCase(), "rlazio.pid.processor.PidProcessorParamucchiRmRitardo");
 		TEMPLATE.put("Mail".toUpperCase(), "rlazio.pid.processor.PidProcessorParamucchiRmRitardoConMail");
+		TEMPLATE.put("Report".toUpperCase(), "rlazio.pid.processor.PidProcessorParamucchiReport");
 
 	}
 	

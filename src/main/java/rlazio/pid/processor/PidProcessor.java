@@ -8,7 +8,7 @@ public interface PidProcessor {
 
 	// un pid puo' produrre piu righe del prospetto
 	// ogni riga e' rappresentata come lista di stringhe
-	public List<List<String>> process(ProspettoGenerale ret);
+	public List<List<Object>> process(ProspettoGenerale ret);
 	
 	
 	

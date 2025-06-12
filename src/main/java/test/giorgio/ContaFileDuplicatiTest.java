@@ -31,8 +31,11 @@ public class ContaFileDuplicatiTest {
 		List<String> fileunivoci = new ArrayList<String>();
 		for (int i = 0; i < fileList.length; i++) {
 			String fileName = fileList[i];
+			boolean log = false;
 			if (fileName.length()>20) {
-				System.out.println(fileName);
+				if (log) {
+					System.out.println(fileName);
+				}	
 			} else {
 				fileunivoci.add(fileName);
 			}

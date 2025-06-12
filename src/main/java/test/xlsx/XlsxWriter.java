@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -31,7 +32,7 @@ public class XlsxWriter {
     CreationHelper createHelper;
     Sheet sheet;
     int rowCount = 0;
-
+    CellStyle dateCellStyle;
 	
 	public XlsxWriter(String fileName) {
 		this.fileName = fileName;
@@ -59,6 +60,9 @@ public class XlsxWriter {
 			sheet = workbook.createSheet();
 		}
 		
+		dateCellStyle = workbook.createCellStyle();
+		CreationHelper createHelper = workbook.getCreationHelper();
+		dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
 	}
 	
 	
@@ -102,14 +106,16 @@ public class XlsxWriter {
 	
 	
 	private void writeCell(Cell cell, Object value) {
+		
 		if (value == null){
 			// niente
 		} else
 		if (value instanceof Number){
 			cell.setCellValue(((Number)value).doubleValue());
 		} else
-		if (value instanceof Date){
+		if (value instanceof Date){	
 			cell.setCellValue((Date)value);
+			cell.setCellStyle(dateCellStyle);
 		} else
 		if (value instanceof Calendar){
 			cell.setCellValue((Calendar)value);

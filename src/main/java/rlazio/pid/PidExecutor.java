@@ -36,11 +36,12 @@ public class PidExecutor {
 		String[] fileList = file.list();
 		
 		if (optionConfig.rimuoviDuplicati) {
-			System.out.println("Eliminazione Dupicati");
+			System.out.println("Eliminazione Duplicati");
 			List<String> fileList1 = ContaFileDuplicatiTest.eliminaDuplicati(fileList);
+			System.out.println(fileList.length + " >> " + fileList1.size() );
 			System.out.println("Rimozione pid obsoleti");
 			List<String> fileList2 = PopolaStrutturaAnalisiTest2_2023.ritornaSoloUltimiPid(fileList1, path);
-			System.out.println(fileList.length + " >> " + fileList2.size() );
+			System.out.println(fileList1.size() + " >> " + fileList2.size() );
 			fileList = fileList2.toArray(new String[fileList2.size()]);
 			
 		}
@@ -77,9 +78,9 @@ public class PidExecutor {
 					e.printStackTrace();
 				}
 
-				List<List<String>> rows = pidProcessor.process(ret);
+				List<List<Object>> rows = pidProcessor.process(ret);
 
-				for (List<String> row : rows) {
+				for (List<Object> row : rows) {
 					righe++;
 					writer.write(row.toArray());
 				}

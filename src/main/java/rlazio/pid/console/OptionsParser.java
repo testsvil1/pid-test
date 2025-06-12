@@ -76,7 +76,8 @@ public class OptionsParser {
 						        "Template disponibili:" + NL + 
 						        ". Sito: Utilizzato per la pubblicazione dei prospetti informativi sul sito della regione lazio"  + NL +
 						        ". Ritardo: Simile a 'Sito' ma con informazioni aggiuntive relative al tipo di comunicazione e alle date di invio" + NL +
-						        ". Mail: Come 'Ritardo' con l'aggiunta della mail dell'azienda e del referente aziendale";
+						        ". Mail: Come 'Ritardo' con l'aggiunta della mail dell'azienda e del referente aziendale" + NL +
+						        ". Report: Report completo utile alla verifica degli obblighi e alla contestazione delle eventuali elusioni degli istituti";
 				formatter.printHelp("pidsumgen", header, options, footer);
 				return null;
 			}

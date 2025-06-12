@@ -35,15 +35,15 @@ public class PidProcessorParamucchiRmRitardo implements PidProcessor {
 	
 	
 	
-	public List<List<String>> process(ProspettoGenerale ret) {
+	public List<List<Object>> process(ProspettoGenerale ret) {
 
-		List<List<String>> res = new ArrayList<List<String>>();
+		List<List<Object>> res = new ArrayList<List<Object>>();
 
 		for (int j = 0; j < ret.getQuadro3().getElencoriepilogativoprovinciale().size(); j++) {
 
 			if (ret.getQuadro3().getElencoriepilogativoprovinciale().get(j).getProvincia().equals(codiceProvincia)) {
 
-				List<String> row = new ArrayList<String>();
+				List<Object> row = new ArrayList<Object>();
 
 				row.add(new DatiProspettoAccessor(ret.getQuadro1().getDatiprospetto()).getNLavoratoriNazionali());
 

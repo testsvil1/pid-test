@@ -183,6 +183,8 @@ private static String date2String(Date data) {
 //		System.out.println(accumulator.get("00281310060"));
 //		System.out.println(accumulator.get("06263170489"));
 		
+		boolean log = false;
+		
 		List<String> validPidFiles = new ArrayList<String>();
 		Map<String, List<Object>> internalMap = accumulator.getInternalMap();
 		for(String key: internalMap.keySet()){
@@ -191,7 +193,9 @@ private static String date2String(Date data) {
 		    //System.out.println(key + " - " + datiInvio);
 		    if (values.size()>1) {
 		    	for(int i=0;i < values.size()-1; i++) {
-		    		System.out.println(key + " - " + values.get(i));
+		    		if (log) {
+		    			System.out.println(key + " - " + values.get(i));
+		    		}
 		    	}
 		    }
 		    validPidFiles.add(datiInvio.getFileName());
